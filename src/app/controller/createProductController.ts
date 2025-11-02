@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import ProductsModel, { IProducts } from '../model/products';
+import ProductsModel, { IProducts } from '../model/productsModel';
 
 class createProductController {
     //[GET]: localhost:3002/create/product
