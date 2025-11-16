@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'; // Import dotenv để load .env
 
 dotenv.config();
 
@@ -8,13 +8,17 @@ const connect = async (): Promise<void> => {
         const uri =
             process.env.MONGODB_URI ||
             'mongodb://localhost:27017/website_converse_dev';
+
         await mongoose.connect(uri);
+
         console.log(
-            '✅ Kết nối MongoDB thành công! URI:',
-            uri.includes('localhost') ? 'Local' : 'Atlas',
+            '✅ Kết nối MongoDB thành công! (URI: ' +
+                (uri.includes('localhost') ? 'Local' : 'Atlas') +
+                ')',
         );
     } catch (error) {
         console.error('❌ Lỗi kết nối MongoDB:', error);
+        process.exit(1);
     }
 };
 

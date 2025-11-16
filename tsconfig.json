@@ -7,14 +7,7 @@
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true
-    },
-    "include": ["src/**/*"],
-    "exclude": [
-        "node_modules",
-        "dist",
-        "**/*.config.js",
-        ".eslintrc.js",
-        "**/.eslintrc.*"
-    ]
+        "forceConsistentCasingInFileNames": true,
+        "typeRoots": ["./node_modules/@types", "./src/types"]
+    }
 }
