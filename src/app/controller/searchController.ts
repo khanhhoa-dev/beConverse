@@ -14,8 +14,8 @@ class SearchController {
             // Tạo ra một biểu thức chính quy để thực hiện  tìm kiếm không phân biệt theo chữ hoa và chữ thường
             const regex = new RegExp(name as string, 'i');
             const product = await ProductsModel.find({ name: regex })
-                .limit(5)
-                .select('name slug image price'); // Lấy ra những field cần thiết
+                .limit(10)
+                .select('name image price product slug'); // Lấy ra những field cần thiết
             res.json(product);
         } catch (error) {
             next(error);

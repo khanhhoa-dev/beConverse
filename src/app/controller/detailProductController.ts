@@ -7,7 +7,16 @@ class DetailProductController {
     async show(req: Request, res: Response, next: NextFunction) {
         try {
             const slug = req.params.slug;
-            const detailProduct = await ProductsModel.find({ slug: slug });
+            console.log('Slug request:', slug);
+
+            const detailProduct = await ProductsModel.findOne({ slug });
+
+            if (!detailProduct) {
+                return res
+                    .status(404)
+                    .json({ message: 'Product not found', slug });
+            }
+
             res.status(200).json(detailProduct);
         } catch (error) {
             next(error);

@@ -11,7 +11,7 @@ interface IVariant extends Document {
 export interface IProducts extends Document {
     name: string;
     price: string;
-    gender: 'Male' | 'Female' | 'Unisex';
+    gender: 'male' | 'female' | 'unisex';
     title: string;
     image: string;
     style: string;
@@ -36,7 +36,7 @@ const ProductsSchema = new Schema<IProducts>(
         price: { type: String, required: true, min: 0 },
         gender: {
             type: String,
-            enum: ['Male', 'Female', 'Unisex'],
+            enum: ['male', 'female', 'unisex'],
             required: true,
         },
         title: { type: String, required: true },

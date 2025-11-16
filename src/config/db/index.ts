@@ -1,11 +1,18 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const connect = async (): Promise<void> => {
     try {
-        await mongoose.connect(
-            'mongodb://localhost:27017/website_converse_dev',
+        const uri =
+            process.env.MONGODB_URI ||
+            'mongodb://localhost:27017/website_converse_dev';
+        await mongoose.connect(uri);
+        console.log(
+            '✅ Kết nối MongoDB thành công! URI:',
+            uri.includes('localhost') ? 'Local' : 'Atlas',
         );
-        console.log('✅ Kết nối MongoDB thành công!');
     } catch (error) {
         console.error('❌ Lỗi kết nối MongoDB:', error);
     }
