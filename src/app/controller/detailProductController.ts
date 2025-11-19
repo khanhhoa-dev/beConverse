@@ -7,7 +7,6 @@ class DetailProductController {
     async show(req: Request, res: Response, next: NextFunction) {
         try {
             const slug = req.params.slug;
-            console.log('Slug request:', slug);
 
             const detailProduct = await ProductsModel.findOne({ slug });
 
