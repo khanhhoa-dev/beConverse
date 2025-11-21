@@ -126,6 +126,65 @@ class ProductsController {
             next(error);
         }
     }
+
+    //[GET] : /products/deleted
+    async deleted(req: Request, res: Response, next: NextFunction) {
+        try {
+            const dataDeletes = await ProductsModel.findWithDeleted({
+                deleted: true,
+            }).select('name image slug price product _id');
+            if (!dataDeletes) {
+                res.status(404).json({ message: 'Not found Product' });
+            }
+            res.json(dataDeletes);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    //[Delete] /products/delete-soft/:id
+    async deleteSoft(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const deleteSoftProduct = await ProductsModel.delete({ _id: id });
+            res.status(200).json({
+                message: 'Product soft deleted successfully',
+                product: deleteSoftProduct,
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    //[Delete] /products/delete-hard/:id
+    async deleteHard(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const deleteSoftProduct = await ProductsModel.deleteOne({
+                _id: id,
+            });
+            res.status(200).json({
+                message: 'Product hard deleted successfully',
+                product: deleteSoftProduct,
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    //[RESTORE] /products/restore/:id
+    async restoreProduct(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const restoreProduct = await ProductsModel.restore({ _id: id });
+            if (!restoreProduct) {
+                res.status(404).json({ message: 'Restore Fail!' });
+            }
+            res.status(200).json(restoreProduct);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 export default new ProductsController();

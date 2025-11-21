@@ -1,5 +1,6 @@
 import slug from 'mongoose-slug-updater';
 import mongoose, { Schema, model, Document } from 'mongoose';
+import mongooseDelete, { SoftDeleteModel } from 'mongoose-delete';
 
 interface IVariant extends Document {
     color: string;
@@ -20,7 +21,7 @@ export interface IProducts extends Document {
     description: string;
     slug: string;
     featured: boolean;
-    variant: IVariant[]; //là một mảng chứa các phần tử kiểu IVariant
+    variant: IVariant[];
 }
 
 //Schema
@@ -54,8 +55,17 @@ const ProductsSchema = new Schema<IProducts>(
     },
 );
 
+//Plugin
+ProductsSchema.plugin(mongooseDelete, {
+    deletedAt: true,
+    overrideMethods: 'all',
+});
+
 mongoose.plugin(slug);
 
 //Model
-const ProductsModel = model('Product', ProductsSchema);
+const ProductsModel = model(
+    'Product',
+    ProductsSchema,
+) as SoftDeleteModel<IProducts>;
 export default ProductsModel;
