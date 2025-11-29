@@ -114,7 +114,7 @@ class AuthController {
                     path: '/',
                     httpOnly: true,
                     secure: true,
-                    sameSite: 'lax',
+                    sameSite: 'none',
                 });
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { password, ...others } = user.toObject();
@@ -159,7 +159,7 @@ class AuthController {
                 httpOnly: true,
                 secure: true,
                 path: '/',
-                sameSite: 'lax',
+                sameSite: 'none',
             });
             res.status(200).json({ accessToken: newAccessToken });
         } catch (error) {
