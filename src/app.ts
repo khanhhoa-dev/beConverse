@@ -15,7 +15,12 @@ db.connect();
 //Middleware
 app.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: [
+            'http://localhost:5173',
+            'https://fe-converse.onrender.com',
+            'https://nhom4-ud27-12.onrender.com',
+        ],
+
         credentials: true,
     }),
 );
