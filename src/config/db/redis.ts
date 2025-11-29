@@ -1,8 +1,10 @@
 import Redis from 'ioredis';
 
 const redis = new Redis({
-    host: 'localhost',
-    port: 6379,
+    host: process.env.REDIS_HOST, // sử dụng host từ .env
+    port: Number(process.env.REDIS_PORT), // sử dụng port từ .env
+    password: process.env.REDIS_PASSWORD, // mật khẩu từ .env
+    tls: {}, // bắt buộc với Redis cloud
     retryStrategy: time => Math.min(time * 50, 2000),
 });
 
@@ -11,7 +13,7 @@ redis.on('error', err => {
 });
 
 redis.on('connect', () => {
-    console.log('Connected to Redis successfully!');
+    console.log('✅ Connected to Redis successfully!');
 });
 
 export default redis;
