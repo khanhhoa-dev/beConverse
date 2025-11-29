@@ -14,6 +14,19 @@ interface IMatchStage {
 }
 
 class ProductsController {
+    // [GET]: /all
+    show = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const allProduct = await ProductsModel.find();
+            if (!allProduct) {
+                res.status(404).json({ message: 'Not found product' });
+            }
+            res.status(200).json(allProduct);
+        } catch (error) {
+            next(error);
+        }
+    };
+
     //[GET] /:product?style=style&type=type&gender=gender
     async product(req: Request, res: Response, next: NextFunction) {
         try {
@@ -172,7 +185,7 @@ class ProductsController {
         }
     }
 
-    //[RESTORE] /products/restore/:id
+    //[PATCH] /products/restore/:id
     async restoreProduct(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
@@ -185,6 +198,35 @@ class ProductsController {
             next(error);
         }
     }
+
+    //[POST] /product/update-quantity
+    updateQuantity = async (
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            const { productId, color, quantity } = req.body;
+            const productUpdate = await ProductsModel.findById({
+                _id: productId,
+            });
+            if (!productUpdate) {
+                return res.status(404).json({ message: 'Product not found' });
+            }
+            const variant = productUpdate.variant.find(
+                item => item.color === color,
+            );
+            if (!variant) {
+                return res.status(404).json({ message: 'Variant not found' });
+            }
+            variant.quantity -= quantity;
+
+            const newQuantity = await productUpdate.save();
+            res.status(200).json(newQuantity);
+        } catch (error) {
+            next(error);
+        }
+    };
 }
 
 export default new ProductsController();
