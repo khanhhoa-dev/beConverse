@@ -7,6 +7,7 @@ export interface IInformUser extends Document {
     username: string;
     email: string;
     password: string;
+    phonenumber: number;
     admin: boolean;
 }
 
@@ -40,6 +41,11 @@ const UserSchema = new Schema<IInformUser>(
         },
         password: {
             type: String,
+            required: true,
+            minLength: 10,
+        },
+        phonenumber: {
+            type: Number,
             required: true,
             minLength: 10,
         },

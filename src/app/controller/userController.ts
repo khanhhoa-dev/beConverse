@@ -17,12 +17,36 @@ class UserController {
     async deleteUser(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
-            const deleteUser = await UserModel.findById({ _id: id });
-            res.status(200).json('Delete user successfully!');
+            const deleteUser = await UserModel.findByIdAndDelete({ _id: id });
+            res.status(200).json(deleteUser);
         } catch (error) {
             next(error);
         }
     }
+
+    //[PATCH]: /users/update-role/:id
+    updateRole = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { data } = req.body;
+            const { id } = req.params;
+            if (typeof data !== 'boolean')
+                return res
+                    .status(400)
+                    .json({ message: 'Data must be boolean' });
+            const updateRole = await UserModel.findByIdAndUpdate(
+                { _id: id },
+                { admin: data },
+                { new: true },
+            );
+            if (!updateRole) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            res.status(200).json({ updateRole });
+        } catch (error) {
+            next(error);
+        }
+    };
 }
 
 export default new UserController();
