@@ -1,4 +1,4 @@
-import redis from '../config/db/redis';
+import redis from '../config/db/redis/redis';
 import jwt from 'jsonwebtoken';
 
 const REFRESH_TOKEN_PREFIX = 'refresh:user';
