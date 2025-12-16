@@ -6,14 +6,16 @@ import verifyToken from '../app/middleware/verifyToken';
 const route = Router();
 
 route.post(
-    '/webhook',
+    '/payos/webhook',
     express.raw({ type: 'application/json' }),
     checkOutController.webhook,
 );
+
+route.post('/cod', verifyToken.verify, checkOutController.createPaymentCod);
 route.post(
-    '/create-payment',
+    '/payos/create-url',
     verifyToken.verify,
-    checkOutController.createPayment,
+    checkOutController.createPaymentPayos,
 );
 
 export default route;

@@ -9,16 +9,18 @@ import updateProductRouter from './updateProduct';
 import searchRouter from './searchProduct';
 import itemCartRouter from './itemCart';
 import checkOutRouter from './checkout';
+import orderDetailRouter from './orderDetail';
 
 function routes(app: Application) {
     app.use('/auth', authRouter);
     app.use('/users', userRouter);
     app.use('/search', searchRouter);
-    app.use('/payos', checkOutRouter);
+    app.use('/payment', checkOutRouter);
     app.use('/items-cart', itemCartRouter);
     app.use('/create', createProductRouter);
     app.use('/update', updateProductRouter);
     app.use('/products', productsController);
+    app.use('/order-detail', orderDetailRouter);
     app.use('/', detailProductRouter);
 }
 

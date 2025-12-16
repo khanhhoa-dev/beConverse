@@ -18,13 +18,15 @@ export interface IDataPayment extends ICheckOutItem {
     phone: string;
     address: string;
     paymentMethod: string;
+    paymentStatus: string;
     shippingMethod: string;
     total: number;
     items: ICheckOutItem[];
-    paymentStatus?: string;
+    orderStatus: string;
     orderId: string;
     orderCode: number;
-    paymentLink: string;
+    paymentLink?: string;
+    isReviewed: boolean;
 }
 
 const CheckOutSchema = new Schema<ICheckOutItem>({
@@ -65,10 +67,16 @@ const CheckOutProductSchema = new Schema<IDataPayment>(
             enum: ['pending', 'paid', 'failed'],
             default: 'pending',
         },
+        orderStatus: {
+            type: String,
+            enum: ['pending', 'shipping', 'confirmed', 'paid', 'canceled'],
+            default: 'pending',
+        },
         items: [CheckOutSchema],
         orderId: { type: String, unique: true },
-        orderCode: { type: Number, required: true, index: true },
+        orderCode: { type: Number, required: true, unique: true },
         paymentLink: { type: String },
+        isReviewed: { type: Boolean, default: false },
     },
     { timestamps: true },
 );
