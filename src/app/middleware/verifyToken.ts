@@ -51,6 +51,18 @@ class VerifyToken {
             }
         });
     };
+    // 4. Verify Owner
+    verifyOwner = async (req: Request, res: Response, next: NextFunction) => {
+        this.verify(req, res, () => {
+            if (req.user?.id === req.params.id) {
+                next();
+            } else {
+                return res
+                    .status(403)
+                    .json({ message: 'You have not allowed' });
+            }
+        });
+    };
 }
 
 export default new VerifyToken();
