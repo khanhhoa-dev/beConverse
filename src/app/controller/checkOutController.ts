@@ -108,8 +108,8 @@ class CheckOutController {
                     price: item.price,
                     quantity: item.quantity,
                 })),
-                returnUrl: `${payosConfig.returnUrl}?orderCode=${orderCode}`,
-                cancelUrl: `${payosConfig.cancelUrl}?orderCode=${orderCode}`,
+                returnUrl: payosConfig.returnUrl,
+                cancelUrl: payosConfig.cancelUrl,
             };
 
             const paymentLink = await payos.paymentRequests.create(body);
