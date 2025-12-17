@@ -3,6 +3,17 @@ import { Request, Response, NextFunction } from 'express';
 import CheckOutProductModel from '../model/checkOutModel';
 
 class OrderDetail {
+    //[GET]: /order-detail/all
+    all = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const orderAll = await CheckOutProductModel.find();
+            res.status(200).json(orderAll);
+        } catch (error) {
+            console.log('Error:', error);
+            next(error);
+        }
+    };
+
     //[GET] : /order-detail/:id
     userOrderInfo = async (req: Request, res: Response, next: NextFunction) => {
         try {

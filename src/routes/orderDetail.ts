@@ -12,11 +12,12 @@ route.patch(
 );
 route.patch(
     '/update-status/:orderCode',
-    verifyToken.verify,
+    verifyToken.verifyAdmin,
     orderDetail.updateOrderStatus,
 );
 route.get('/reviewed/:id', verifyToken.verifyOwner, orderDetail.orderReviewed);
 route.get('/canceled/:id', verifyToken.verifyOwner, orderDetail.orderCanceled);
+route.get('/all', verifyToken.verifyAdmin, orderDetail.all);
 route.get('/:id', verifyToken.verifyOwner, orderDetail.userOrderInfo);
 
 export default route;
