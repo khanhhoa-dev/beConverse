@@ -11,8 +11,8 @@ route.patch(
     orderDetail.reviewOrder,
 );
 route.patch(
-    '/update-status/:orderCode',
-    verifyToken.verifyAdmin,
+    '/update-status/:orderCode/:id',
+    verifyToken.verifyOwnerAndAdmin,
     orderDetail.updateOrderStatus,
 );
 route.get('/reviewed/:id', verifyToken.verifyOwner, orderDetail.orderReviewed);
